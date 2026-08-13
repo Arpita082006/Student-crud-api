@@ -2,10 +2,12 @@ package com.first.studentcrudapi.controller;
 
 import com.first.studentcrudapi.model.Student;
 import com.first.studentcrudapi.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -13,6 +15,11 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @GetMapping("/search")
+    public List<Student> getByDepartment(@RequestParam String department) {
+        return studentService.getStudentsByDepartment(department);
+    }
+    
     @GetMapping
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
@@ -24,7 +31,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
+    public Student createStudent(@Valid @RequestBody Student student) {
         return studentService.createStudent(student);
     }
 

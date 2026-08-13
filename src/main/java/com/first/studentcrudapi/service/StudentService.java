@@ -6,6 +6,8 @@ import com.first.studentcrudapi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class StudentService {
@@ -13,6 +15,12 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    public List<Student> getStudentsByDepartment(String department) {
+        return studentRepository.findByDepartment(department);
+    }
+    public Page<Student> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
+    }
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
